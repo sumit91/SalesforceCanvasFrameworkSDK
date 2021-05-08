@@ -62,7 +62,9 @@ POSSIBILITY OF SUCH DAMAGE.
 	 </style>
          <script src="https://digitalmind-developer-edition.um7.force.com/customerIdentity/servlet/servlet.loginwidgetcontroller?type=javascript_widget&min=false&cacheMaxAge=259200" async defer></script>
     	 <script>
-		function onLogin(identity) {	
+		function onLogin(identity) {
+			console.log(identity);
+			console.log('----->>');
 			var targetDiv = document.querySelector(SFIDWidget.config.target);	
 
 			var avatar = document.createElement('a'); 
