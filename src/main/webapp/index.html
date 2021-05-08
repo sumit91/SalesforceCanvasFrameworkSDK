@@ -35,8 +35,54 @@ POSSIBILITY OF SUCH DAMAGE.
          <meta name="salesforce-login-handler" content="onLogin" >
          <meta name="salesforce-logout-handler" content="onLogout" >
          <link href="https://digitalmind-developer-edition.um7.force.com/customerIdentity/servlet/servlet.loginwidgetcontroller?type=css" rel="stylesheet" type="text/css" /> 
-         <script src="https://digitalmind-developer-edition.um7.force.com/customerIdentity/servlet/servlet.loginwidgetcontroller?type=javascript_widget" async defer></script>
-    </head>
+	 <style>
+	 .button {
+		  border: none;
+		  color: white;
+		  background-color: #008CBA;
+		  padding: 10px 25px;
+		  text-align: center;
+		  text-decoration: none;
+		  display: inline-block;
+		  font-size: 16px;
+		  margin: 2px 2px;
+		  cursor: pointer;
+		}	
+	 </style>
+         <script src="https://digitalmind-developer-edition.um7.force.com/customerIdentity/servlet/servlet.loginwidgetcontroller?type=javascript_widget&min=false&cacheMaxAge=259200" async defer></script>
+    	 <script>
+		function onLogin(identity) {	
+			var targetDiv = document.querySelector(SFIDWidget.config.target);	
+
+			var avatar = document.createElement('a'); 
+			avatar.href = "javascript:showIdentityOverlay();";
+
+
+			var img = document.createElement('img'); 
+			img.src = identity.photos.thumbnail; 
+			img.className = "sfid-avatar";
+
+			var username = document.createElement('span'); 
+			username.innerHTML = identity.username;
+			username.className = "sfid-avatar-name";
+
+			var iddiv = document.createElement('div'); 
+			iddiv.id = "sfid-identity";
+
+			avatar.appendChild(img);
+			avatar.appendChild(username);
+			iddiv.appendChild(avatar);		
+
+			targetDiv.innerHTML = '';
+			targetDiv.appendChild(iddiv);		
+		}
+
+		function onLogout() {
+			SFIDWidget.init();
+
+		}
+	   </script>
+	</head>
     <body>
       <div id="page">
         <div id="content">
@@ -45,44 +91,11 @@ POSSIBILITY OF SUCH DAMAGE.
            </div>
            <div id="canvas-content">
                 <!--<iframe width="600" height="300" src="https://digitalmind-developer-edition.um7.force.com/customerIdentity/CommunitiesLogin" title="Login Page">-->
-                <input type="button" id="signInlink">
+                <button id="signInlink" type="button">Login</button>
           </div>
         </div>
         
         <div id="footer">&nbsp;</div>
       </div>
     </body>
-   <script>
-      function onLogin(identity) {
-		
-		var targetDiv = document.querySelector(SFIDWidget.config.target);	
-		
-		var avatar = document.createElement('a'); 
-	 	avatar.href = "javascript:showIdentityOverlay();";
-		
-		
-		var img = document.createElement('img'); 
-	 	img.src = identity.photos.thumbnail; 
-		img.className = "sfid-avatar";
-	
-		var username = document.createElement('span'); 
-		username.innerHTML = identity.username;
-		username.className = "sfid-avatar-name";
-	
-		var iddiv = document.createElement('div'); 
-	 	iddiv.id = "sfid-identity";
-		
-		avatar.appendChild(img);
-		avatar.appendChild(username);
-		iddiv.appendChild(avatar);		
-	
-		targetDiv.innerHTML = '';
-		targetDiv.appendChild(iddiv);		
-	}
-      
-      function onLogout() {
-		SFIDWidget.init();
- 
-        }
-   </script>
  </html>
